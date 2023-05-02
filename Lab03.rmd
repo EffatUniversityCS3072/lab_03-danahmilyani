@@ -1,11 +1,12 @@
 ---
 title: "Lab 03"
-author: ""
-date: ""
-editor_options: 
-  chunk_output_type: console
+author: "Danah Milyani"
+date: "2-5-23"
 output:
+  word_document: default
   pdf_document: default
+editor_options:
+  chunk_output_type: console
 ---
 
 # Packages
@@ -27,42 +28,61 @@ fl_votes %>%
 # Exercise 1
 
 ```{r add-winner}
-
+fl_votes <- fl_votes %>% mutate(winner20 = 
+                                if_else(rep20 > dem20,'Donald Trump', 'Joe Biden'))
 ```
 
 
 # Exercise 2
 
 ```{r fl-plot-1}
-
+ggplot(fl_votes) + 
+  geom_sf(aes(fill=winner20)) + 
+  scale_fill_manual(values=c ('#DE0100', '#0015BC')) +
+  labs(title="Election winners 2020", fill="winner") +
+  theme_bw()
 
 ```
 
 # Exercise #3
 
 ```{r fl-props}
+fl_votes <- fl_votes %>% mutate(prop_rep16 =rep16/(rep16+dem16))
+fl_votes <- fl_votes %>% mutate(prop_rep20 =rep20/(rep20+dem20))
+
 
 ```
 
 # Exercise 4
 
 ```{r fl-plot-2}
+ggplot(fl_votes) + 
+  geom_sf(aes(fill=prop_rep20)) + 
+  scale_fill_gradient(low='#0015BC', high= '#DE0100') +
+  labs(title="Election 2020 results", fill="Republican share of votes") +
+  theme_bw()
 
 ```
 
 # Exercise 5
 
 ```{r fl-change}
-
+fl_votes <- fl_votes %>% mutate(diff_rep = prop_rep20 - prop_rep16)
 ```
 
 # Exercise 6
 
 ```{r fl-plot-3}
+ggplot(fl_votes) + 
+  geom_sf(aes(fill=diff_rep)) + 
+  scale_fill_gradient2(low='#0015BC', midpoint=0, high= '#DE0100') +
+  labs(title="Election 2020 results", fill="Change in Republican share") +
+  theme_bw()
 
 ```
 
 # Exercise 7
+Q.	What do the visualizations you developed tell you about the 2016 and 2020 Presidential election in Florida? What are limitations of these visualizations?
 
-
+A. The visualizations i developed tells me that the 2016 and 2020 Presidential election in Florida was mostly leaning towards republican votes, except in certain areas which show a heavy democratic votes, and we could see that compared to the 2016 election the 2020 election showed that the democratic votes have increased in most cities. The limitations of these visualizations is that for fl-plot-1 the visual of the graph wasnt very clear 
 
